@@ -1,36 +1,29 @@
 var express = require("express");
 var router = express.Router();
 
-router.get("/", function(req, res, next) {
-  res.render("index");
-});
+const HomeController = require("../app/controllers/HomeController");
+const AboutController = require("../app/controllers/AboutController");
+const ServiceController = require("../app/controllers/ServiceController");
+const PortfolioController = require("../app/controllers/PortfolioController");
+const FeatureController = require("../app/controllers/FeatureController");
+const TestimonialController = require("../app/controllers/TestimonialController");
+const PricingController = require("../app/controllers/PricingController");
+const ContactController = require("../app/controllers/ContactController");
 
-router.get("/about-us", function(req, res, next) {
-  res.render("about-us");
-});
+router.get("/", HomeController.index);
 
-router.get("/services", function(req, res, next) {
-  res.render("services");
-});
+router.get("/about-us", AboutController.index);
 
-router.get("/portfolio", function(req, res, next) {
-  res.render("portfolio");
-});
+router.get("/services", ServiceController.index);
 
-router.get("/features", function(req, res, next) {
-  res.render("features");
-});
+router.get("/portfolio", PortfolioController.index);
 
-router.get("/testimonials", function(req, res, next) {
-  res.render("testimonials");
-});
+router.get("/features", FeatureController.index);
 
-router.get("/pricing", function(req, res, next) {
-  res.render("pricing");
-});
+router.get("/testimonials", TestimonialController.index);
 
-router.get("/contact-us", function(req, res, next) {
-  res.render("contact-us");
-});
+router.get("/pricing", PricingController.index);
+
+router.get("/contact-us", ContactController.index);
 
 module.exports = router;
