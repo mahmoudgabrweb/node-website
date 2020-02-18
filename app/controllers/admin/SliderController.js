@@ -1,5 +1,18 @@
+const Slider = require("../../models/Slider");
+
 exports.index = (req, res) => {
-  res.render("admin/sliders/index");
+  Slider.find()
+    .then(sliders => {
+      res.render("admin/sliders/index", {
+        sliders: sliders,
+        message: req.flash("success")
+      });
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: err.message || "Error occurred while retrieving sliders."
+      });
+    });
 };
 
 exports.create = (req, res) => {
@@ -7,9 +20,21 @@ exports.create = (req, res) => {
 };
 
 exports.store = (req, res) => {
-  let data = [{ title: req.body.title, description: req.body.description }];
-  let data_parsed = JSON.stringify(data);
-  res.status(200).send(data_parsed);
+  const slider = new Slider({
+    title: req.body.title,
+    description: req.body.description
+  });
+  slider
+    .save()
+    .then(data => {
+      req.flash("success", "Slider added successfully.");
+      res.redirect("/admin/sliders");
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: err.message || "Some error occured while creating the slider."
+      });
+    });
 };
 
 exports.edit = (req, res) => {
